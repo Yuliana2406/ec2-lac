@@ -3,12 +3,10 @@ Description: EC2 creada desde GitHub Actions
 
 Parameters:
   InstanceDescription:
-    Description: Descripcion del servidor web
     Type: String
     Default: Servidor Web Apache
 
   SecurityGroupDescription:
-    Description: Security Group Description
     Type: String
     Default: Acceso HTTP al servidor
 
@@ -25,8 +23,6 @@ Resources:
       Tags:
         - Key: Name
           Value: EC2-Clase-CF
-        - Key: Proyecto
-          Value: Class-CloudFormation
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
@@ -34,25 +30,14 @@ Resources:
           yum install -y httpd
           systemctl start httpd
           systemctl enable httpd
-          echo "<html><body>
-          <h1>${InstanceDescription} 👏</h1>
-          <h2>Hola desde CloudFormation con GitHub 🚀</h2>
-          </body></html>" > /var/www/html/index.html
+          echo "<h1>${InstanceDescription}</h1>" > /var/www/html/index.html
 
   ServerSecurityGroupClase:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: !Ref SecurityGroupDescription
-      Tags:
-        - Key: Name
-          Value: SG-HTTP-Clase-CF
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
-
-Outputs:
-
-  InstanceId:
-    Value: !Ref MyEC2Wilder

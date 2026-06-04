@@ -2,6 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: EC2 creada desde GitHub Actions
 
 Parameters:
+
   InstanceDescription:
     Description: Descripcion del servidor web
     Type: String
